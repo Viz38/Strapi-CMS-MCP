@@ -276,45 +276,6 @@ To integrate with Cursor, you can add a custom command to your Cursor settings:
 }
 ```
 
-## GitHub Release Workflow
-
-This project includes a GitHub Actions workflow that automates the process of creating a release and publishing the package to npm.
-
-### How it Works
-
-When you push a commit to the `main` branch, the workflow will automatically:
-1.  Increment the patch version of the package (e.g., from `1.0.1` to `1.0.2`).
-2.  Publish the new version to npm.
-3.  Push the new version tag to the GitHub repository.
-
-### Setup
-
-To use this workflow, you need to create a secret in your GitHub repository named `NPM_TOKEN` and a `.npmrc` file in your project.
-
-1.  **Generate an npm access token:**
-    *   Go to your npm account settings: https://www.npmjs.com/settings/your-username/tokens
-    *   Click on **Generate New Token**.
-    *   Give your token a name (e.g., "GitHub Actions").
-    *   Select the **Publish** permission.
-    *   Click **Generate Token**.
-    *   **Copy the generated token immediately.** It will not be shown again.
-
-2.  **Create a secret in your GitHub repository:**
-    *   Go to your GitHub repository settings: https://github.com/Viz38/Strapi-CMS-MCP/settings/secrets/actions
-    *   Click on **New repository secret**.
-    *   For **Name**, enter `NPM_TOKEN`.
-    *   For **Value**, paste the npm access token you just copied.
-    *   Click **Add secret**.
-
-3.  **Create a `.npmrc` file:**
-    *   Create a file named `.npmrc` in the root of your project with the following content:
-        ```
-        //registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}
-        ```
-    *   This file tells npm to use the `NODE_AUTH_TOKEN` environment variable for authentication, which is set in the GitHub Actions workflow.
-
-Once you have created the `NPM_TOKEN` secret and the `.npmrc` file, the release workflow will be able to publish new versions of your package to npm automatically.
-
 ## Troubleshooting
 
 *   **`401 Unauthorized` error:** This is the most common error and is almost always due to an issue with your `STRAPI_API_TOKEN`.
