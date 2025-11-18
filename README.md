@@ -4,6 +4,8 @@
 
 This tool provides a command-line interface (CLI) to interact with your Strapi Content Management System (CMS) instance. It allows you to automate various functionalities, such as listing content types, managing entries, and uploading media.
 
+⚠️ **IMPORTANT DISCLAIMER**: This software has been developed with the assistance of AI technology. It is provided as-is and should NOT be used in production environments without thorough testing and validation. The code may contain errors, security vulnerabilities, or unexpected behavior. Use at your own risk for research, learning, or development purposes only.
+
 ## Prerequisites
 
 *   [Node.js](https://nodejs.org/) (v14 or higher)
@@ -21,6 +23,11 @@ This tool provides a command-line interface (CLI) to interact with your Strapi C
     ```bash
     npm install
     ```
+4.  **Install globally (optional):**
+    ```bash
+    npm install -g .
+    ```
+    This will allow you to run the `strapi-mcp` command from any directory.
 
 ## Configuration
 
@@ -37,6 +44,24 @@ STRAPI_API_TOKEN=YOUR_STRAPI_API_TOKEN
 
 *   **`STRAPI_URL`**: Replace `http://localhost:1337` with the actual URL of your Strapi instance.
 *   **`STRAPI_API_TOKEN`**: Replace `YOUR_STRAPI_API_TOKEN` with a valid Strapi API token.
+
+#### Quick Setup for Local Development
+
+To quickly create a `.env` file with dummy credentials for local testing:
+
+**For Windows (Command Prompt/PowerShell):**
+```bash
+echo STRAPI_URL=http://localhost:1337 > .env
+echo STRAPI_API_TOKEN=dummy_token_for_local_dev >> .env
+```
+
+**For macOS/Linux (Bash/Zsh):**
+```bash
+echo "STRAPI_URL=http://localhost:1337" > .env
+echo "STRAPI_API_TOKEN=dummy_token_for_local_dev" >> .env
+```
+
+Remember to replace `dummy_token_for_local_dev` with an actual Strapi API token with the correct permissions as described in the next section.
 
 ### 2. Create a Strapi API Token
 
@@ -60,7 +85,7 @@ It is crucial that your Strapi API token has the correct permissions to access t
 
 ## Usage
 
-You can run the commands using `npm run strapi-mcp -- <command>`.
+You can run the commands using `strapi-mcp <command>` if you installed it globally, or `npm run strapi-mcp -- <command>` if you are running it from the project directory.
 
 ### `list-content-types`
 
@@ -68,31 +93,55 @@ Lists all available content types in your Strapi instance.
 
 **Usage:**
 ```bash
-npm run strapi-mcp -- list-content-types
+strapi-mcp list-content-types
 ```
 
-**Example Output:**
-```
-Fetching content types from Strapi...
-Available content types:
-- plugin::upload.file
-- plugin::upload.folder
-- api::blog-post.blog-post
-...
-```
+### `get-entry <contentType> [id]`
 
-### `get-entry <contentType> <id>`
-
-Retrieves a specific entry from a given content type.
+Retrieves one or more entries from a given content type. If no `id` is provided, it will list all entries for the content type, with support for filtering, sorting, and pagination.
 
 **Arguments:**
 *   `<contentType>`: The API ID of the content type (e.g., `api::blog-post.blog-post`).
-*   `<id>`: The ID of the entry to retrieve.
+*   `[id]`: (Optional) The ID of the entry to retrieve.
 
-**Usage:**
-```bash
-npm run strapi-mcp -- get-entry api::blog-post.blog-post 1
-```
+**Options:**
+*   `--filters <filters>`: Filter results (e.g., `'{"title":{"$contains":"search"}}'`).
+*   `--sort <sort>`: Sort results (e.g., `'createdAt:desc'`).
+*   `--populate <populate>`: Populate relations (e.g., `'category'`).
+*   `--page <page>`: Page number for pagination.
+*   `--pageSize <pageSize>`: Number of items per page.
+
+**Usage Examples:**
+
+*   **Get a single entry:**
+    ```bash
+    strapi-mcp get-entry api::blog-post.blog-post 1
+    ```
+
+*   **List all entries for a content type:**
+    ```bash
+    strapi-mcp get-entry api::blog-post.blog-post
+    ```
+
+*   **Filter entries:**
+    ```bash
+    strapi-mcp get-entry api::blog-post.blog-post --filters '{"title":{"$contains":"search"}}'
+    ```
+
+*   **Sort entries:**
+    ```bash
+    strapi-mcp get-entry api::blog-post.blog-post --sort 'createdAt:desc'
+    ```
+
+*   **Populate relations:**
+    ```bash
+    strapi-mcp get-entry api::blog-post.blog-post --populate 'category'
+    ```
+
+*   **Paginate entries:**
+    ```bash
+    strapi-mcp get-entry api::blog-post.blog-post --page 2 --pageSize 10
+    ```
 
 ### `create-entry <contentType> '<data>'`
 
@@ -104,7 +153,7 @@ Creates a new entry for a given content type.
 
 **Usage:**
 ```bash
-npm run strapi-mcp -- create-entry api::blog-post.blog-post '{"title": "My new blog post", "body": "This is the content of my new blog post."}'
+strapi-mcp create-entry api::blog-post.blog-post '{"title": "My new blog post", "body": "This is the content of my new blog post."}'
 ```
 
 ### `update-entry <contentType> <id> '<data>'`
@@ -118,7 +167,7 @@ Updates an existing entry for a given content type.
 
 **Usage:**
 ```bash
-npm run strapi-mcp -- update-entry api::blog-post.blog-post 1 '{"title": "My updated blog post"}'
+strapi-mcp update-entry api::blog-post.blog-post 1 '{"title": "My updated blog post"}'
 ```
 
 ### `delete-entry <contentType> <id>`
@@ -131,7 +180,7 @@ Deletes an entry from a given content type.
 
 **Usage:**
 ```bash
-npm run strapi-mcp -- delete-entry api::blog-post.blog-post 1
+strapi-mcp delete-entry api::blog-post.blog-post 1
 ```
 
 ### `upload-media <filePath>`
@@ -143,9 +192,26 @@ Uploads a media file to Strapi.
 
 **Usage:**
 ```bash
-npm run strapi-mcp -- upload-media "C:\path\to\your\image.jpg"
+strapi-mcp upload-media "C:\path\to\your\image.jpg"
 ```
+
+## Troubleshooting
+
+*   **`401 Unauthorized` error:** This is the most common error and is almost always due to an issue with your `STRAPI_API_TOKEN`.
+    *   Ensure the token is correct and has not expired.
+    *   Verify that the token's associated role has the necessary permissions for the operation you are trying to perform (see "Create a Strapi API Token" section).
+*   **`404 Not Found` error:**
+    *   Check that the `STRAPI_URL` in your `.env` file is correct and that your Strapi server is running.
+    *   Verify that the `contentType` and `id` you are using in the commands are correct.
+*   **`ECONNREFUSED` error:** This means the tool could not connect to your Strapi server.
+    *   Ensure your Strapi server is running.
+    *   Check that the `STRAPI_URL` is correct.
+    *   If you are running the tool in a different environment than your Strapi server, ensure that the server is accessible from the tool's environment (e.g., firewall rules, port forwarding).
 
 ## Expanding Functionality
 
 You can expand this tool by adding more commands to `index.js` and corresponding methods to `strapi-client.js`. The `commander.js` library makes it easy to add new commands, options, and arguments.
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.

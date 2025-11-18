@@ -37,6 +37,24 @@ STRAPI_API_TOKEN=YOUR_STRAPI_API_TOKEN
 
 Replace `http://localhost:1337` with the URL of your Strapi instance and `YOUR_STRAPI_API_TOKEN` with a valid Strapi API token. The API token needs to have the appropriate permissions for the operations you want to perform.
 
+#### Quick Setup for Local Development
+
+To quickly create a `.env` file with dummy credentials for local testing:
+
+**For Windows (Command Prompt/PowerShell):**
+```bash
+echo STRAPI_URL=http://localhost:1337 > .env
+echo STRAPI_API_TOKEN=dummy_token_for_local_dev >> .env
+```
+
+**For macOS/Linux (Bash/Zsh):**
+```bash
+echo "STRAPI_URL=http://localhost:1337" > .env
+echo "STRAPI_API_TOKEN=dummy_token_for_local_dev" >> .env
+```
+
+Remember to replace `dummy_token_for_local_dev` with an actual Strapi API token with the correct permissions as described in the next section.
+
 ### Running Commands
 
 You can run the commands using the `npm run strapi-mcp -- <command>` script defined in `package.json`.
