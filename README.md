@@ -50,13 +50,13 @@ This method is recommended if you want to contribute to the development of the t
     ```
 
 4.  **Run locally:**
-    You can run the tool using the `npm run strapi-mcp --` command from within the project directory. For example:
+    You can run the tool using the `npm run strapi-cms-mcp --` command from within the project directory. For example:
     ```bash
-    npm run strapi-mcp -- list-content-types
+    npm run strapi-cms-mcp -- list-content-types
     ```
 
 5.  **Install globally from local source (optional):**
-    If you want to run the `strapi-mcp` command from any directory while still using your local version of the tool, you can install it globally from the local source:
+    If you want to run the `strapi-cms-mcp` command from any directory while still using your local version of the tool, you can install it globally from the local source:
     ```bash
     npm install -g .
     ```
@@ -119,7 +119,7 @@ It is crucial that your Strapi API token has the correct permissions to access t
 
 ## 🚀 Usage
 
-You can run the commands using `strapi-cms-mcp <command>` if you installed it globally, or `npm run strapi-mcp -- <command>` if you are running it from the project directory.
+You can run the commands using `strapi-cms-mcp <command>` if you installed it globally, or `npm run strapi-cms-mcp -- <command>` if you are running it from the project directory.
 
 ### `list-content-types`
 

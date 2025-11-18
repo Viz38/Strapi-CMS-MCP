@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "bin": {
-    "strapi-mcp": "./index.js"
+    "strapi-cms-mcp": "./index.js"
   },
   "scripts": {
     "start": "node index.js list-content-types",

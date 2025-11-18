@@ -5,7 +5,7 @@ const strapiClient = require('./strapi-client');
 const program = new Command();
 
 program
-  .name('strapi-mcp')
+  .name('strapi-cms-mcp')
   .description('A CLI tool to interact with your Strapi instance.')
   .version('1.0.0');
 
