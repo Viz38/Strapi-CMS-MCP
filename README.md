@@ -1,4 +1,20 @@
-## Installation
+#  Strapi MCP (Model Context Protocol) Tool 🚀
+
+## 📖 Project Overview
+
+This tool provides a command-line interface (CLI) to interact with your Strapi Content Management System (CMS) instance. It allows you to automate various functionalities, such as listing content types, managing entries, and uploading media.
+
+⚠️ **IMPORTANT DISCLAIMER**: This software has been developed with the assistance of AI technology. It is provided as-is and should NOT be used in production environments without thorough testing and validation. The code may contain errors, security vulnerabilities, or unexpected behavior. Use at your own risk for research, learning, or development purposes only.
+
+
+## 🛠️ Prerequisites
+
+*   [Node.js](https://nodejs.org/) (v14 or higher)
+*   [npm](https://www.npmjs.com/)
+*   A running Strapi instance
+
+
+## 📦 Installation
 
 There are two ways to install and use this tool:
 
@@ -45,7 +61,8 @@ This method is recommended if you want to contribute to the development of the t
     npm install -g .
     ```
 
-## Configuration
+
+## ⚙️ Configuration
 
 To get this tool running, you need to configure your Strapi instance details and API token.
 
@@ -99,9 +116,10 @@ It is crucial that your Strapi API token has the correct permissions to access t
 7.  **Copy the newly generated token immediately.** It will not be shown again.
 8.  Paste this token into your `.env` file as the value for `STRAPI_API_TOKEN`.
 
-## Usage
 
-You can run the commands using `strapi-mcp <command>` if you installed it globally, or `npm run strapi-mcp -- <command>` if you are running it from the project directory.
+## 🚀 Usage
+
+You can run the commands using `strapi-cms-mcp <command>` if you installed it globally, or `npm run strapi-mcp -- <command>` if you are running it from the project directory.
 
 ### `list-content-types`
 
@@ -109,7 +127,7 @@ Lists all available content types in your Strapi instance.
 
 **Usage:**
 ```bash
-strapi-mcp list-content-types
+strapi-cms-mcp list-content-types
 ```
 
 ### `get-entry <contentType> [id]`
@@ -131,32 +149,32 @@ Retrieves one or more entries from a given content type. If no `id` is provided,
 
 *   **Get a single entry:**
     ```bash
-    strapi-mcp get-entry api::blog-post.blog-post 1
+    strapi-cms-mcp get-entry api::blog-post.blog-post 1
     ```
 
 *   **List all entries for a content type:**
     ```bash
-    strapi-mcp get-entry api::blog-post.blog-post
+    strapi-cms-mcp get-entry api::blog-post.blog-post
     ```
 
 *   **Filter entries:**
     ```bash
-    strapi-mcp get-entry api::blog-post.blog-post --filters '{"title":{"$contains":"search"}}'
+    strapi-cms-mcp get-entry api::blog-post.blog-post --filters '{"title":{"$contains":"search"}}'
     ```
 
 *   **Sort entries:**
     ```bash
-    strapi-mcp get-entry api::blog-post.blog-post --sort 'createdAt:desc'
+    strapi-cms-mcp get-entry api::blog-post.blog-post --sort 'createdAt:desc'
     ```
 
 *   **Populate relations:**
     ```bash
-    strapi-mcp get-entry api::blog-post.blog-post --populate 'category'
+    strapi-cms-mcp get-entry api::blog-post.blog-post --populate 'category'
     ```
 
 *   **Paginate entries:**
     ```bash
-    strapi-mcp get-entry api::blog-post.blog-post --page 2 --pageSize 10
+    strapi-cms-mcp get-entry api::blog-post.blog-post --page 2 --pageSize 10
     ```
 
 ### `create-entry <contentType> '<data>'`
@@ -169,7 +187,7 @@ Creates a new entry for a given content type.
 
 **Usage:**
 ```bash
-strapi-mcp create-entry api::blog-post.blog-post '{"title": "My new blog post", "body": "This is the content of my new blog post."}'
+strapi-cms-mcp create-entry api::blog-post.blog-post '{"title": "My new blog post", "body": "This is the content of my new blog post."}'
 ```
 
 ### `update-entry <contentType> <id> '<data>'`
@@ -183,7 +201,7 @@ Updates an existing entry for a given content type.
 
 **Usage:**
 ```bash
-strapi-mcp update-entry api::blog-post.blog-post 1 '{"title": "My updated blog post"}'
+strapi-cms-mcp update-entry api::blog-post.blog-post 1 '{"title": "My updated blog post"}'
 ```
 
 ### `delete-entry <contentType> <id>`
@@ -196,7 +214,7 @@ Deletes an entry from a given content type.
 
 **Usage:**
 ```bash
-strapi-mcp delete-entry api::blog-post.blog-post 1
+strapi-cms-mcp delete-entry api::blog-post.blog-post 1
 ```
 
 ### `upload-media <filePath>`
@@ -208,10 +226,11 @@ Uploads a media file to Strapi.
 
 **Usage:**
 ```bash
-strapi-mcp upload-media "C:\path\to\your\image.jpg"
+strapi-cms-mcp upload-media "C:\path\to\your\image.jpg"
 ```
 
-## Adding MCP to Vibe Coding Tools
+
+## 🔌 Adding MCP to Vibe Coding Tools
 
 Once you have published your `strapi-cms-mcp` tool to npm, you can integrate it with other popular CLI tools and AI assistants.
 
@@ -276,7 +295,8 @@ To integrate with Cursor, you can add a custom command to your Cursor settings:
 }
 ```
 
-## Troubleshooting
+
+## 🤔 Troubleshooting
 
 *   **`401 Unauthorized` error:** This is the most common error and is almost always due to an issue with your `STRAPI_API_TOKEN`.
     *   Ensure the token is correct and has not expired.
@@ -289,10 +309,12 @@ To integrate with Cursor, you can add a custom command to your Cursor settings:
     *   Check that the `STRAPI_URL` is correct.
     *   If you are running the tool in a different environment than your Strapi server, ensure that the server is accessible from the tool's environment (e.g., firewall rules, port forwarding).
 
-## Expanding Functionality
+
+## 🧩 Expanding Functionality
 
 You can expand this tool by adding more commands to `index.js` and corresponding methods to `strapi-client.js`. The `commander.js` library makes it easy to add new commands, options, and arguments.
 
-## License
+
+## 📄 License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
