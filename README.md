@@ -1,33 +1,49 @@
-# Strapi MCP (Model Context Protocol) Tool
-
-## Project Overview
-
-This tool provides a command-line interface (CLI) to interact with your Strapi Content Management System (CMS) instance. It allows you to automate various functionalities, such as listing content types, managing entries, and uploading media.
-
-⚠️ **IMPORTANT DISCLAIMER**: This software has been developed with the assistance of AI technology. It is provided as-is and should NOT be used in production environments without thorough testing and validation. The code may contain errors, security vulnerabilities, or unexpected behavior. Use at your own risk for research, learning, or development purposes only.
-
-## Prerequisites
-
-*   [Node.js](https://nodejs.org/) (v14 or higher)
-*   [npm](https://www.npmjs.com/)
-*   A running Strapi instance
-
 ## Installation
 
-1.  **Clone this repository** (if you haven't already).
-2.  **Navigate to the project directory** in your terminal:
+There are two ways to install and use this tool:
+
+### Method 1: Global Installation (Recommended)
+
+This method installs the tool globally on your system, allowing you to run the `strapi-cms-mcp` command from any directory.
+
+1.  **Install from npm:**
     ```bash
-    cd D:\Github\Strapi-mcp
+    npm install -g strapi-cms-mcp
     ```
-3.  **Install dependencies**:
+
+2.  **Configuration:**
+    After installing, you still need to create a `.env` file to store your Strapi URL and API token. The tool will look for this file in the directory where you run the `strapi-cms-mcp` command.
+
+### Method 2: Local Installation (for development)
+
+This method is recommended if you want to contribute to the development of the tool.
+
+1.  **Clone this repository:**
+    ```bash
+    git clone https://github.com/Viz38/Strapi-CMS-MCP.git
+    ```
+
+2.  **Navigate to the project directory:**
+    ```bash
+    cd Strapi-CMS-MCP
+    ```
+
+3.  **Install dependencies:**
     ```bash
     npm install
     ```
-4.  **Install globally (optional):**
+
+4.  **Run locally:**
+    You can run the tool using the `npm run strapi-mcp --` command from within the project directory. For example:
+    ```bash
+    npm run strapi-mcp -- list-content-types
+    ```
+
+5.  **Install globally from local source (optional):**
+    If you want to run the `strapi-mcp` command from any directory while still using your local version of the tool, you can install it globally from the local source:
     ```bash
     npm install -g .
     ```
-    This will allow you to run the `strapi-mcp` command from any directory.
 
 ## Configuration
 
@@ -195,7 +211,7 @@ Uploads a media file to Strapi.
 strapi-mcp upload-media "C:\path\to\your\image.jpg"
 ```
 
-## Integrating with Other Tools
+## Adding MCP to Vibe Coding Tools
 
 Once you have published your `strapi-cms-mcp` tool to npm, you can integrate it with other popular CLI tools and AI assistants.
 
@@ -259,6 +275,45 @@ To integrate with Cursor, you can add a custom command to your Cursor settings:
   ]
 }
 ```
+
+## GitHub Release Workflow
+
+This project includes a GitHub Actions workflow that automates the process of creating a release and publishing the package to npm.
+
+### How it Works
+
+When you push a commit to the `main` branch, the workflow will automatically:
+1.  Increment the patch version of the package (e.g., from `1.0.1` to `1.0.2`).
+2.  Publish the new version to npm.
+3.  Push the new version tag to the GitHub repository.
+
+### Setup
+
+To use this workflow, you need to create a secret in your GitHub repository named `NPM_TOKEN` and a `.npmrc` file in your project.
+
+1.  **Generate an npm access token:**
+    *   Go to your npm account settings: https://www.npmjs.com/settings/your-username/tokens
+    *   Click on **Generate New Token**.
+    *   Give your token a name (e.g., "GitHub Actions").
+    *   Select the **Publish** permission.
+    *   Click **Generate Token**.
+    *   **Copy the generated token immediately.** It will not be shown again.
+
+2.  **Create a secret in your GitHub repository:**
+    *   Go to your GitHub repository settings: https://github.com/Viz38/Strapi-CMS-MCP/settings/secrets/actions
+    *   Click on **New repository secret**.
+    *   For **Name**, enter `NPM_TOKEN`.
+    *   For **Value**, paste the npm access token you just copied.
+    *   Click **Add secret**.
+
+3.  **Create a `.npmrc` file:**
+    *   Create a file named `.npmrc` in the root of your project with the following content:
+        ```
+        //registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}
+        ```
+    *   This file tells npm to use the `NODE_AUTH_TOKEN` environment variable for authentication, which is set in the GitHub Actions workflow.
+
+Once you have created the `NPM_TOKEN` secret and the `.npmrc` file, the release workflow will be able to publish new versions of your package to npm automatically.
 
 ## Troubleshooting
 
