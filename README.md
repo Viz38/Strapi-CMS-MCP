@@ -234,16 +234,22 @@ strapi-cms-mcp upload-media "C:\path\to\your\image.jpg"
 
 Once you have published your `strapi-cms-mcp` tool to npm, you can integrate it with other popular CLI tools and AI assistants.
 
+**Important**: When integrating with these tools, you cannot rely on a `.env` file. You must configure the environment variables (`STRAPI_URL` and `STRAPI_API_TOKEN`) directly within each tool's JSON configuration, as shown in the examples below.
+
 ### Claude Code
 
-To add your tool to Claude Code, you can create a `claude-tools.json` file in your project with the following content:
+To add your tool to Claude Code, create a `claude-tools.json` file. Use the `env` object to provide your Strapi credentials.
 
 ```json
 {
   "mcpServers": {
     "strapi": {
       "command": "npx",
-      "args": ["-y", "strapi-cms-mcp"]
+      "args": ["strapi-cms-mcp"],
+      "env": {
+        "STRAPI_URL": "http://localhost:1337",
+        "STRAPI_API_TOKEN": "YOUR_ACTUAL_STRAPI_TOKEN"
+      }
     }
   }
 }
@@ -251,14 +257,18 @@ To add your tool to Claude Code, you can create a `claude-tools.json` file in yo
 
 ### Gemini CLI
 
-To use your tool with Gemini CLI, you can create a `gemini-cli.json` file with a similar configuration:
+For Gemini CLI, create a `gemini-cli.json` file and include the `env` object.
 
 ```json
 {
   "tools": {
     "strapi": {
       "command": "npx",
-      "args": ["-y", "strapi-cms-mcp"]
+      "args": ["strapi-cms-mcp"],
+      "env": {
+        "STRAPI_URL": "http://localhost:1337",
+        "STRAPI_API_TOKEN": "YOUR_ACTUAL_STRAPI_TOKEN"
+      }
     }
   }
 }
@@ -266,14 +276,18 @@ To use your tool with Gemini CLI, you can create a `gemini-cli.json` file with a
 
 ### Open CLI
 
-For Open CLI, you can define a tool in your `open-cli.json` configuration:
+For Open CLI, define the tool in your `open-cli.json` configuration with the `env` object.
 
 ```json
 {
   "tools": {
     "strapi": {
       "command": "npx",
-      "args": ["-y", "strapi-cms-mcp"]
+      "args": ["strapi-cms-mcp"],
+      "env": {
+        "STRAPI_URL": "http://localhost:1337",
+        "STRAPI_API_TOKEN": "YOUR_ACTUAL_STRAPI_TOKEN"
+      }
     }
   }
 }
@@ -281,19 +295,24 @@ For Open CLI, you can define a tool in your `open-cli.json` configuration:
 
 ### Cursor
 
-To integrate with Cursor, you can add a custom command to your Cursor settings:
+To integrate with Cursor, add a custom command to your settings. The `env` object is where you securely provide your credentials.
 
 ```json
 {
   "cursor.customCommands": [
     {
       "name": "Strapi MCP",
-      "command": "npx -y strapi-cms-mcp {command}",
-      "prompt": "Enter a Strapi MCP command"
+      "command": "npx strapi-cms-mcp {command}",
+      "prompt": "Enter a Strapi MCP command (e.g., 'list-content-types')",
+      "env": {
+        "STRAPI_URL": "http://localhost:1337",
+        "STRAPI_API_TOKEN": "YOUR_ACTUAL_STRAPI_TOKEN"
+      }
     }
   ]
 }
 ```
+
 
 
 ## 🤔 Troubleshooting
