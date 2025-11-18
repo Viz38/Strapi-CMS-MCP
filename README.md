@@ -195,6 +195,71 @@ Uploads a media file to Strapi.
 strapi-mcp upload-media "C:\path\to\your\image.jpg"
 ```
 
+## Integrating with Other Tools
+
+Once you have published your `strapi-cms-mcp` tool to npm, you can integrate it with other popular CLI tools and AI assistants.
+
+### Claude Code
+
+To add your tool to Claude Code, you can create a `claude-tools.json` file in your project with the following content:
+
+```json
+{
+  "mcpServers": {
+    "strapi": {
+      "command": "npx",
+      "args": ["-y", "strapi-cms-mcp"]
+    }
+  }
+}
+```
+
+### Gemini CLI
+
+To use your tool with Gemini CLI, you can create a `gemini-cli.json` file with a similar configuration:
+
+```json
+{
+  "tools": {
+    "strapi": {
+      "command": "npx",
+      "args": ["-y", "strapi-cms-mcp"]
+    }
+  }
+}
+```
+
+### Open CLI
+
+For Open CLI, you can define a tool in your `open-cli.json` configuration:
+
+```json
+{
+  "tools": {
+    "strapi": {
+      "command": "npx",
+      "args": ["-y", "strapi-cms-mcp"]
+    }
+  }
+}
+```
+
+### Cursor
+
+To integrate with Cursor, you can add a custom command to your Cursor settings:
+
+```json
+{
+  "cursor.customCommands": [
+    {
+      "name": "Strapi MCP",
+      "command": "npx -y strapi-cms-mcp {command}",
+      "prompt": "Enter a Strapi MCP command"
+    }
+  ]
+}
+```
+
 ## Troubleshooting
 
 *   **`401 Unauthorized` error:** This is the most common error and is almost always due to an issue with your `STRAPI_API_TOKEN`.
